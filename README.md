@@ -256,12 +256,21 @@ sample response:
 
 `/api/v1/quizzes` | GET | Returns a list of all quizzes
 
+sample request:
+
+```json
+{
+    "previous_questions": [1, 4, 20, 15],
+    "quiz_category": "current category"
+ }
+```
+
 sample response:
 
 ```json
 {
   "success": true,
-  "questions": [
+  "question": 
     {
       "id": 1,
       "question": "What is the capital of the United States?",
@@ -269,13 +278,6 @@ sample response:
       "difficulty": 1,
       "category": "Geography"
     },
-    {
-      "id": 2,
-      "question": "What is the capital of the United States?",
-      "answer": "Washington D.C.",
-      "difficulty": 1,
-      "category": "Geography"
-    }
-  ],
+  
 }
 ```
