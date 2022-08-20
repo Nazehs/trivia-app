@@ -47,6 +47,21 @@ def create_app(test_config=None):
 
         })
 
+    @app.route('/categories', methods=['POST'])
+    def create_categories():
+        body = request.get_json()
+        new_category = body.get('category', None)
+        try:
+            category = Category(name=new_category)
+            category.insert()
+            return jsonify({
+                'success': True,
+                'created': category.id,
+                'categories': [category.format() in Category.query.all()]
+            })
+        except:
+            abort(422)
+
     @app.route('/questions', methods=['GET'])
     def get_questions():
         questions = Question.query.order_by(Question.id.desc()).all()
@@ -137,6 +152,10 @@ def create_app(test_config=None):
             "success": True,
             "question": current_question[0] if len(current_question) > 0 else None
         })
+
+    """ 
+    Error Handling
+    """
 
     @app.errorhandler(404)
     def not_found(error):

@@ -1,4 +1,5 @@
 # API Development and Documentation Final Project
+
 * **Start your virtual environment** 
 
 From the backend folder run
@@ -60,3 +61,221 @@ Pay special attention to what data the frontend is expecting from each API respo
 By making notes ahead of time, you will practice the core skill of being able to read and understand code and will have a simple plan to follow to build out the endpoints of your backend API.
 
 > View the [Frontend README](./frontend/README.md) for more details.
+
+## Endpoints Documentation
+
+The following endpoints are available:
+
+### Endpoint | Method | Description
+
+`/api/v1/questions` | GET | Returns a list of all questions
+
+response sample:
+
+```json
+{
+  "success": true,
+  "categories":[
+    {
+        "id": 1,
+        "type": "Science"
+    },
+     {
+        "id": 2,
+        "type": "Art"
+    }
+  ],
+  "current_category":{
+    "id": 1,
+    "type": "Science"
+  },
+  "total_questions": 5,
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the capital of the United States?",
+      "answer": "Washington D.C.",
+      "difficulty": 1,
+      "category": "Geography"
+    },
+    {
+      "id": 2,
+      "question": "What is the capital of the United States?",
+      "answer": "Washington D.C.",
+      "difficulty": 1,
+      "category": "Geography"
+    }
+  ]
+}
+```
+
+
+`/api/v1/questions/search` | GET | Returns a list of questions matching the search query
+```json
+{
+  "success": true,
+  "total_questions": 5,
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the capital of the United States?",
+      "answer": "Washington D.C.",
+      "difficulty": 1,
+      "category": "Geography"
+    },
+    {
+      "id": 2,
+      "question": "What is the capital of the United States?",
+      "answer": "Washington D.C.",
+      "difficulty": 1,
+      "category": "Geography"
+    }
+  ]
+}
+```
+
+
+`/api/v1/questions` | POST | Creates a new question
+sample request:
+
+```json
+{
+    "questions": [
+        {
+            "question": "What is the capital of the United States?",
+            "answer": "Washington D.C.",
+            "difficulty": 1,
+            "category": "Geography"
+        }
+    ],
+    "total_questions": 1,
+    "created":3,
+     "success": true,
+}
+```
+
+
+`/api/v1/categories` | GET | Returns a list of all categories
+
+sample response:
+
+```json
+{
+  "success": true,
+  "categories": [
+    {
+      "id": 1,
+      "type": "Geography"
+    },
+    {
+      "id": 2,
+      "type": "History"
+    }
+  ]
+}
+```
+
+
+`/api/v1/categories/<int:category_id>/questions` | GET | Returns a single category
+
+response sample:
+
+```json
+{
+  "success": true,
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the capital of the United States?",
+      "answer": "Washington D.C.",
+      "difficulty": 1,
+      "category": "Geography"
+    },
+    {
+      "id": 2,
+      "question": "What is the capital of the United States?",
+      "answer": "Washington D.C.",
+      "difficulty": 1,
+      "category": "Geography"
+    }
+  ],
+  "total_questions": 5,
+  "current_category": {
+    "id": 1,
+    "type": "Geography"
+  }
+}
+```
+
+`/api/v1/categories` | POST | Creates a new category
+sample response:
+
+```json
+{
+  "success": true,
+  "created": 1,
+  "categories": [
+    {
+      "id": 1,
+      "type": "Geography"
+    },
+    {
+      "id": 2,
+      "type": "Geography"
+    }
+  ]
+}
+```
+
+`/api/v1/categories/<int:id>/questions` | PUT | Updates a category
+
+sample response:
+
+```json
+{
+  "success": true,
+  "category": {
+    "id": 1,
+    "type": "Geography"
+  }
+}
+```
+
+`/api/v1/categories/<int:id>/questions` | DELETE | Deletes a category
+sample response:
+
+```json
+{
+  "success": true,
+  "category": {
+    "id": 1,
+    "type": "Geography"
+  }
+}
+```
+
+`/api/v1/quizzes` | GET | Returns a list of all quizzes
+
+sample response:
+
+```json
+{
+  "success": true,
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the capital of the United States?",
+      "answer": "Washington D.C.",
+      "difficulty": 1,
+      "category": "Geography"
+    },
+    {
+      "id": 2,
+      "question": "What is the capital of the United States?",
+      "answer": "Washington D.C.",
+      "difficulty": 1,
+      "category": "Geography"
+    }
+  ],
+}
+```
