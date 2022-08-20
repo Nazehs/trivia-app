@@ -52,23 +52,26 @@ def create_app(test_config=None):
         body = request.get_json()
         new_category = body.get('category', None)
         try:
-            category = Category(name=new_category)
+            category = Category(type=new_category)
             category.insert()
             return jsonify({
                 'success': True,
                 'created': category.id,
                 'categories': [category.format() in Category.query.all()]
             })
-        except:
+        except Exception as e:
+            print(e)
             abort(422)
 
     @app.route('/questions', methods=['GET'])
     def get_questions():
         questions = Question.query.order_by(Question.id.desc()).all()
         current_questions = paginate_content(request, questions)
-
+        if len(current_questions) == 0:
+            abort(404)
         return jsonify({
             "questions": current_questions,
+            "success": True,
             'categories': [category.format() for category in Category.query.all()],
             'current_category': (Category.query.order_by(Category.id).first()).format(),
             "total_questions": len(questions),
@@ -80,7 +83,7 @@ def create_app(test_config=None):
             Question.id == question_id).one_or_none()
 
         if question is None:
-            abort(404)
+            abort(422)
 
         question.delete()
         selection = Question.query.order_by(Question.id.desc()).all()
@@ -128,16 +131,24 @@ def create_app(test_config=None):
 
     @app.route('/categories/<int:category_id>/questions')
     def get_questions_by_category(category_id):
-        selection = Question.query.filter(
-            Question.category == category_id).all()
-        current_questions = paginate_content(request, selection)
+        try:
+            selection = Question.query.filter(
+                Question.category == category_id).all()
+            print(selection)
+            current_questions = paginate_content(request, selection)
+            print(current_questions)
 
-        return jsonify({
-            "success": True,
-            "questions": current_questions,
-            "current_category": (Category.query.filter(Category.id == category_id).first()).format(),
-            "total_questions": len(selection)
-        })
+            if len(selection) == 0:
+                abort(404)
+            return jsonify({
+                "success": True,
+                "questions": current_questions,
+                "current_category": (Category.query.filter(Category.id == category_id).first()).format(),
+                "total_questions": len(selection)
+            })
+        except Exception as e:
+            print(e)
+            abort(422)
 
     @app.route('/quizzes', methods=['POST'])
     def quizzes():
