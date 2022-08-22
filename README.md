@@ -26,12 +26,6 @@ That's where you come in! Help them finish the trivia app so they can start hold
 4. Search for questions based on a text query string.
 5. Play the quiz game, randomizing either all questions or within a specific category.
 
-Completing this trivia app will give you the ability to structure plan, implement, and test an API - skills essential for enabling your future applications to communicate with others.
-
-## Starting and Submitting the Project
-
-[Fork](https://help.github.com/en/articles/fork-a-repo) the project repository and [clone](https://help.github.com/en/articles/cloning-a-repository) your forked repository to your machine. Work on the project locally and make sure to push all your changes to the remote repository before submitting the link to your repository in the Classroom.
-
 ## About the Stack
 
 We started the full stack application for you. It is designed with some key functional areas:
@@ -68,7 +62,7 @@ The following endpoints are available:
 
 ### Endpoint | Method | Description
 
-`/api/v1/questions` | GET | Returns a list of all questions
+`/questions?page=${integer}` | GET | Returns a list of all questions
 
 response sample:
 
@@ -110,7 +104,14 @@ response sample:
 ```
 
 
-`/api/v1/questions/search` | GET | Returns a list of questions matching the search query
+`/api/v1/questions/search` | POST | Returns a list of questions matching the search query
+sample request 
+```json
+{
+    "searchTerm":"United State"
+}
+```
+
 ```json
 {
   "success": true,
@@ -137,6 +138,17 @@ response sample:
 
 `/api/v1/questions` | POST | Creates a new question
 sample request:
+
+```json
+{
+    "question":  "Heres a new question string",
+    "answer":  "Heres a new answer string",
+    "difficulty": 1,
+    "category": 3,
+}
+```
+
+sample response
 
 ```json
 {
@@ -208,6 +220,13 @@ response sample:
 ```
 
 `/api/v1/categories` | POST | Creates a new category
+sample request
+```json
+{
+    "type":"Fiction"
+}
+
+```
 sample response:
 
 ```json
